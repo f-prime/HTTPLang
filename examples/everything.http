@@ -1,0 +1,6 @@
+set URL http://google.com/
+do GET /
+set URL $URL
+set POST a=1,b=2,c=3,d=4
+set COOKIE $TMPCOOKIE
+do POST /

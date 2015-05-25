@@ -1,0 +1,6 @@
+set URL http://localhost:5000/
+do GET /
+set POSTDATA one=1,two=2
+do POST /
+set COOKIE $TMPCOOKIE
+do GET /

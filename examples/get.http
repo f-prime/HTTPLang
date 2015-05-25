@@ -1,0 +1,3 @@
+set URL http://google.com/
+do GET /
+show $HTML
