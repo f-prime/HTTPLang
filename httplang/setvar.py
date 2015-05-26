@@ -24,7 +24,7 @@ def post(line):
     outDict = {}
     for x in data:
         x = x.split("=")
-        outDict[x[0]] = ' '.join(x[1:])
+        outDict[x[0]] = utils.typeDetermin(' '.join(x[1:]))
         
     utils.baseVariables["POSTDATA"] = outDict
 
