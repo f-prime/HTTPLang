@@ -10,6 +10,16 @@ Here's the thing, I don't like using urllib to make HTTP requests in Python, and
 
 Whether it is helpful to other people or not I don't know, but I know I could use something like this.
 
+
+Installation
+====
+* Clone the repo
+* Run `python setup.py install`
+
+Usage
+===
+`httplang <file.http>`
+
 Documentation
 =============
 
@@ -21,9 +31,6 @@ HTTPLang is very strict about things like spaces. Make sure that your code match
 Examples
 --------
 
-#### Usage
-
-`python httplang.py <file.http>`
 
 ```
 
