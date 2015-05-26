@@ -4,7 +4,7 @@ import utils
 
 def run(file_):
     with open(file_, 'rb') as file:
-        for line in file.readlines():
+        for line in file:
             parse.parse(line)
     return utils.baseVariables
 
