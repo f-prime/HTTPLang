@@ -42,10 +42,12 @@ def post(line):
     if not utils.baseVariables["POSTDATA"]:
         sys.exit("POSTDATA must be set to do POST request, line {}".format(utils.lines))
     url = utils.baseVariables["URL"] + line[2]
-    request = urllib2.Request(url, urlencode(utils.baseVariables["POSTDATA"]))
+    handler = urllib2.HTTPHandler()
+    opener = urllib2.build_opener(handler)
+    request = urllib2.Request(url, data=urlencode(utils.baseVariables["POSTDATA"]))
     request = __setHeaders(request)
     try:
-        data = urllib2.urlopen(request)
+        data = opener.open(request)
     except urllib2.HTTPError:
         sys.exit("Error on line {0} url {1} does not exist.".format(utils.lines, url))
     source = data.read()

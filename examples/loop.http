@@ -1,0 +1,5 @@
+set URL http://google.com
+loop 2
+do GET /
+show $STATUS
+endloop

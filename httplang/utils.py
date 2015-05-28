@@ -3,6 +3,7 @@ import setvar
 import sys
 import show
 import getvalue
+import loop
 
 lines = 0
 
@@ -13,7 +14,7 @@ baseVariables = {
         "COOKIE":None,
         "HTML":None,
         "POSTDATA":None,
-        "USERAGENT":None,                                                                                                                                                                              
+        "USERAGENT":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0",                                                                                           
         "STATUS":None,
         "VALUE":None,
 
@@ -27,9 +28,14 @@ keywords = {
         "set":setvar.setvar,
         "show":show.show,        
         "getvalue":getvalue.getvalue,
-
+        "loop":loop.loop,
+        "endloop":loop.endloop,
 }
 
+
+inLoop = False
+loopCode = []
+inRecursionForLoop = False # This is a little bit of a hack... but it works. Will need to be modified in some way in the future, but loops work.
 
 def typeDetermin(data):
     if data.startswith("$"):

@@ -3,6 +3,11 @@ About
 
 HTTPLang is a scripting language that makes writing HTTP request routines simpler.
 
+Current Version
+===============
+
+0.1.0
+
 Why?
 ====
 
@@ -41,6 +46,15 @@ show $HTML
 ``` 
 
 ```
+set URL http://google.com
+loop 2
+do GET /
+show $STATUS
+endloop
+
+```
+
+```
 
 set URL http://somesite.com
 set POSTDATA username=myUsername,password=myPassword is this
@@ -64,6 +78,23 @@ show $VALUE
 
 Commands
 --------
+
+#### loop
+
+Gives the ability to loop commands. NOTE: Nested loops are not supported in the current version.
+
+Example: 
+```
+set URL http://google.com
+loop 5
+do GET /
+show $STATUS
+endloop
+
+```
+
+Note: `endloop` is needed at the end of the loop code.
+
 
 #### getvalue
 
