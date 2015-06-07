@@ -1,6 +1,7 @@
 import parse
 import sys
 import utils
+import repl
 
 def run(file_):
     with open(file_, 'rb') as file:
@@ -10,6 +11,7 @@ def run(file_):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        sys.exit("Usage: ./httplang <file.http>")
+        repl.enterREPL()
+        sys.exit()
     inputFile = sys.argv[1]
     run(inputFile)
