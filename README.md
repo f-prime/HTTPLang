@@ -11,7 +11,7 @@ Current Version
 Why?
 ====
 
-Here's the thing, I don't like using urllib to make HTTP requests in Python, and curl gets messy. Requests is okay, but I wanted another solution. I find the process to be stupidly complicated, and handling cookies is a nightmare. I have had enough, and so I have decided to start this project. HTTPLang will hopefully be some kind of solution to the problem of simulating a browser programatically. HTTPLang allows you to make POST and GET requests easily. It makes handling cookies and sessions a breeze, and making POST requests simple. It's a scripting language dedicated 100% to writing HTTP request routines that could be called from another program. My end goal here is to have HTTPLang be a little helper to a larger program that is trying to do some HTTP request stuff. So if you are trying to write a script that logs into a website and changes a field or something. Instead of trying to figure out some complicated library that doesn't really do what you want anyway, just write a quick HTTPLang script that does it in less lines of code.
+Here's the thing, I don't like using urllib to make HTTP requests in Python, and curl gets messy. Requests is okay, but I wanted another solution. I find the process to be stupidly complicated, and handling cookies is a nightmare. I have had enough, and so I have decided to start this project. HTTPLang will hopefully be some kind of solution to the problem of simulating a browser programmatically. HTTPLang allows you to make POST and GET requests easily. It makes handling cookies and sessions a breeze, and making POST requests simple. It's a scripting language dedicated 100% to writing HTTP request routines that could be called from another program. My end goal here is to have HTTPLang be a little helper to a larger program that is trying to do some HTTP request stuff. So if you are trying to write a script that logs into a website and changes a field or something. Instead of trying to figure out some complicated library that doesn't really do what you want anyway, just write a quick HTTPLang script that does it in less lines of code.
 
 Whether it is helpful to other people or not I don't know, but I know I could use something like this.
 
@@ -98,7 +98,7 @@ Note: `endloop` is needed at the end of the loop code.
 
 #### getvalue
 
-Gives the ability to pull the value from a tag, useful for getting values of forms upon a form submisson.
+Gives the ability to pull the value from a tag, useful for getting values of forms upon a form submission.
 
 Supported attributes to find by:
 
@@ -128,7 +128,7 @@ A URL must be set for both requests or an error will be raised. For POST request
 
 #### $
 
-The `$` gives the ability to call the varaibles. They have limited use and can only be used after a `show` after a `set` and a `set POSTDATA` when setting the value of a field.
+The `$` gives the ability to call the variables. They have limited use and can only be used after a `show` after a `set` and a `set POSTDATA` when setting the value of a field.
 
 The available variables are:
 
