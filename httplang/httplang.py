@@ -12,8 +12,8 @@ def main():
 
 def run(file_):
     with open(file_, 'rb') as file:
-        for line in file:
-            parse.parse(line)
+        #pass enumerated file so we can get line numbers
+        parse.preParse(enumerate(file))
     return utils.baseVariables
 
 if __name__ == "__main__":
