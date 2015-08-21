@@ -3,7 +3,6 @@ import setvar
 import sys
 import show
 import getvalue
-import loop
 
 lines = 0
 
@@ -27,15 +26,8 @@ keywords = {
         "do":do.do,
         "set":setvar.setvar,
         "show":show.show,        
-        "getvalue":getvalue.getvalue,
-        "loop":loop.loop,
-        "endloop":loop.endloop,
+        "getvalue":getvalue.getvalue
 }
-
-
-inLoop = False
-loopCode = []
-inRecursionForLoop = False # This is a little bit of a hack... but it works. Will need to be modified in some way in the future, but loops work.
 
 def typeDetermin(data):
     if data.startswith("$"):
@@ -43,6 +35,6 @@ def typeDetermin(data):
         if data in baseVariables:
             return baseVariables[data]
         else:
-            sys.exit("Error on line {0}, variable ${1} is not a language variable.")
+            sys.exit("Error on line {0}, variable ${1} is not a language variable.".format(lines,data))
 
     return data
