@@ -16,6 +16,7 @@ Here's the thing, I don't like using urllib to make HTTP requests in Python, and
 Whether it is helpful to other people or not I don't know, but I know I could use something like this.
 
 
+
 Installation
 ====
 * Clone the repo
@@ -139,6 +140,7 @@ The available variables are:
 - TMPCOOKIE
 - HTML
 - STATUS
+- LINKS
 
 #### show
 

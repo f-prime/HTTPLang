@@ -1,0 +1,6 @@
+set URL http://localhost:5555
+set POSTDATA username=a,password=a
+do POST /login/
+show $TMPCOOKIE
+set COOKIE $TMPCOOKIE
+do GET /play/

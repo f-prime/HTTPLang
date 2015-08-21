@@ -2,6 +2,7 @@ import urllib2
 import utils
 import sys
 from urllib import urlencode
+import re
 
 def do(line):
     subKeys = {
@@ -35,6 +36,7 @@ def get(line):
         pass
     utils.baseVariables["HTML"] = source
     utils.baseVariables['STATUS'] = data.getcode()
+    utils.baseVariables['LINKS'] = re.findall(r'href=[\'"]?([^\'" >]+)', source)
 
 def post(line):
     if not utils.baseVariables["URL"]:
