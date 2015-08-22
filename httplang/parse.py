@@ -21,6 +21,7 @@ def preParse(code,loops = 1):
 def loopCheckThenParse(lineNumber,line,loopStatus):
     #check and remove comments
     line = line.split("#", 1)
+    line = line[0].split("//",1)
     line = line[0]
     #split line
     splitLine = line.split()
