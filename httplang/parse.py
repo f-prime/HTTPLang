@@ -19,6 +19,8 @@ def preParse(code,loops = 1):
 
 #checks for loops and normal parses otherwise                
 def loopCheckThenParse(lineNumber,line,loopStatus):
+    #check and remove comments
+    line, comments = line.split("#", 1)
     #split line
     splitLine = line.split()
     #ignore empty/blank lines
