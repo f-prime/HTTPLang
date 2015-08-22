@@ -9,18 +9,19 @@ def enterREPL():
                   'loopCode':[]}
     
     #track inputed line count
-    #because we want to start the count at zero, we start at -1
-    inpLine = -1
+    inpLine = 0
     
     while(True):
-        inp = raw_input(str(utils.lines) + "> ").strip()
-
-        if(inp == "quit"):
-            return
-        
         #update line count
         inpLine += 1
         utils.lines = inpLine
         
+        #display prompt
+        inp = raw_input(str(utils.lines) + "> ").strip()
+
+        #handles quit directive
+        if(inp == "quit"):
+            return
+
         #handles loops and executes otherwise    
         loopStatus = parse.loopCheckThenParse(utils.lines,inp,loopStatus)
