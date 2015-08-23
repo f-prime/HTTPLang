@@ -13,12 +13,16 @@ def preParse(code,loops = 1):
         #iterate through lines in the code
         for lineNumber, line in code:
             #set the global lines variables (add one because line count starts at one)
-            utils.lines = lineNumber + 1
+            utils.lines = lineNumber
             #hand off line to loopCheckThenParse
             loopStatus = loopCheckThenParse(lineNumber,line,loopStatus)
 
 #checks for loops and normal parses otherwise                
 def loopCheckThenParse(lineNumber,line,loopStatus):
+    #check and remove comments
+    line = line.split("#", 1)
+    line = line[0].split("//",1)
+    line = line[0]
     #split line
     splitLine = line.split()
     #ignore empty/blank lines
