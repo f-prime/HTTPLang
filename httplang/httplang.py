@@ -13,7 +13,7 @@ def main():
 def run(file_):
     with open(file_, 'rb') as file:
         #pass enumerated file so we can get line numbers starting at 1
-        parse.preParse(enumerate(file,1))
+        parse.listParse(enumerate(file,1))
     return utils.baseVariables
 
 if __name__ == "__main__":

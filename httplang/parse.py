@@ -1,9 +1,8 @@
 import utils
 import sys
 
-#preParse handles the loops and then feeds to parse function
-#WARNING: NEED WAY TO HANDLE FORGOTTEN ENDLOOPS
-def preParse(code,loops = 1):
+#handles lines of code in a list
+def listParse(code,loops = 1):
     #fufill loops
     for i in range(loops):
         #set loop status variable
@@ -17,7 +16,8 @@ def preParse(code,loops = 1):
             #hand off line to loopCheckThenParse
             loopStatus = loopCheckThenParse(lineNumber,line,loopStatus)
 
-#checks for loops and normal parses otherwise                
+#checks for loops and normal parses otherwise    
+#WARNING: NEED WAY TO HANDLE FORGOTTEN ENDLOOPS
 def loopCheckThenParse(lineNumber,line,loopStatus):
     #check and remove comments
     line = line.split("#", 1)
@@ -55,7 +55,7 @@ def loopCheckThenParse(lineNumber,line,loopStatus):
         loopStatus['loopDepth'] -= 1
         #parse the loopCode if this is the end of the rootLoop
         if loopStatus['loopDepth'] == 0:
-            preParse(loopStatus['loopCode'],loopStatus['rootLoopLength'])
+            listParse(loopStatus['loopCode'],loopStatus['rootLoopLength'])
             #clear the loop variables
             loopStatus['loopCode'] = []
         else:
