@@ -23,5 +23,5 @@ def enterREPL():
         if(inp == "quit"):
             return
 
-        #handles loops and executes otherwise    
-        loopStatus = parse.loopCheckThenParse(utils.lines,inp,loopStatus)
+        #parse the line  
+        loopStatus = parse.parse(utils.lines,inp,loopStatus)

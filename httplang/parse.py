@@ -13,12 +13,11 @@ def listParse(code,loops = 1):
         for lineNumber, line in code:
             #set the global lines variables (add one because line count starts at one)
             utils.lines = lineNumber
-            #hand off line to loopCheckThenParse
-            loopStatus = loopCheckThenParse(lineNumber,line,loopStatus)
+            #hand off line to parse
+            loopStatus = parse(lineNumber,line,loopStatus)
 
-#checks for loops and normal parses otherwise    
-#WARNING: NEED WAY TO HANDLE FORGOTTEN ENDLOOPS
-def loopCheckThenParse(lineNumber,line,loopStatus):
+#parses single line of code
+def parse(lineNumber,line,loopStatus):
     #check and remove comments
     line = line.split("#", 1)
     line = line[0].split("//",1)
@@ -71,6 +70,9 @@ def loopCheckThenParse(lineNumber,line,loopStatus):
     #return loop status info
     return loopStatus               
 
+#evaluates a line of code 
+#eval_ defers from parse in that parse handles loops and comments
+#and then pases the lines to eval_
 def eval_(line):
     line = line.split()
     if line[0] in utils.keywords:
