@@ -66,12 +66,12 @@ def loopCheckThenParse(lineNumber,line,loopStatus):
         if loopStatus['loopDepth'] != 0:
             loopStatus['loopCode'].append( (lineNumber,line) )
         else:
-        #otherwise go ahead and parse it
-            parse(line)
+        #otherwise go ahead and evaluate it
+            eval_(line)
     #return loop status info
     return loopStatus               
 
-def parse(line):
+def eval_(line):
     line = line.split()
     if line[0] in utils.keywords:
         utils.keywords[line[0]](line)
