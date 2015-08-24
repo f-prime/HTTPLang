@@ -4,9 +4,12 @@ import parse
 def enterREPL():
     
     #loop state code
-    loopStatus = {'loopDepth':0,
+    lineInfo = {'loopDepth':0,
                   'rootLoopLength':0,
-                  'loopCode':[]}
+                  'loopCode':[],
+                  'line':"",
+                  'lineNumber':0,
+                  'splitLine' : []}
     
     #track inputed line count
     inpLine = 0
@@ -22,6 +25,10 @@ def enterREPL():
         #handles quit directive
         if(inp == "quit"):
             return
+            
+        #update lineInfo
+        lineInfo['line'] = inp
+        lineInfo['lineNumber'] = utils.lines
 
         #parse the line  
-        loopStatus = parse.parse(utils.lines,inp,loopStatus)
+        loopStatus = parse.parse(lineInfo)
