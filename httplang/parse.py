@@ -33,21 +33,23 @@ def parse(lineNumber,line,loopStatus):
     #handle loops and other preEval stuff
     if splitLine[0] in preEval.keywords:
         loopStatus = preEval.keywords[splitLine[0]](loopStatus)
-    else:
+    
     #handle regular code
+    else:
     
         #if we are in a loop, add this line to the loop code
         if loopStatus['loopDepth'] != 0:
             loopStatus['loopCode'].append( (lineNumber,line) )
-        else:
+        
         #otherwise go ahead and evaluate it
+        else:
             eval_(line)
             
     #return loop status info
     return loopStatus               
 
 #evaluates a line of code 
-# (eval_ defers from parse in that parse handles loops and comments and then pases the lines to eval_ )
+# (eval_ differs from parse in that parse handles loops and comments and then pases the lines to eval_ )
 def eval_(line):
     line = line.split()
     if line[0] in utils.keywords:
