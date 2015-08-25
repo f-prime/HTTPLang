@@ -1,80 +1,66 @@
 import utils
 import sys
+import preEval
 
-#preParse handles the loops and then feeds to parse function
-#WARNING: NEED WAY TO HANDLE FORGOTTEN ENDLOOPS
-def preParse(code,loops = 1):
+#handles lines of code in a list
+def listParse(code,loops = 1):
     #fufill loops
     for i in range(loops):
         #set loop status variable
-        loopStatus = {'loopDepth':0,
+        #NOTE: PROBABLY SHOULD CHANGE TO NAMEDTUPLE
+        lineInfo = {'loopDepth':0,
                   'rootLoopLength':0,
-                  'loopCode':[]}
+                  'loopCode':[],
+                  'line':"",
+                  'lineNumber':0,
+                  'splitLine' : []}
         #iterate through lines in the code
         for lineNumber, line in code:
+            #update the lineInfo variable
+            lineInfo['line'] = line
+            lineInfo['lineNumber'] = lineNumber
             #set the global lines variables (add one because line count starts at one)
             utils.lines = lineNumber
-            #hand off line to loopCheckThenParse
-            loopStatus = loopCheckThenParse(lineNumber,line,loopStatus)
+            #hand off line to parse
+            lineInfo = parse(lineInfo)
 
-#checks for loops and normal parses otherwise                
-def loopCheckThenParse(lineNumber,line,loopStatus):
-    #check and remove comments
-    line = line.split("#", 1)
-    line = line[0].split("//",1)
-    line = line[0]
+#parses single line of code
+def parse(lineInfo):
+    
+    #remove comments
+    lineInfo['line'] = preEval.removeComments(lineInfo['line'])
+    
     #split line
-    splitLine = line.split()
+    lineInfo['splitLine'] = lineInfo['line'].split()
+    
     #ignore empty/blank lines
-    if len(splitLine) < 1 or line == "\n":
-        return (loopStatus)
-                
-    #handle loop begins
-    if splitLine[0] == "loop":
-        #increase the loop depth
-        loopStatus['loopDepth'] += 1
-        #if this is the first/root loop, make this the rootLoopLength
-        if loopStatus['loopDepth'] == 1:
-            #check we have precisely one argument
-            if len(splitLine) != 2:
-                sys.exit("Loop Error, loop requires exactly one argument on line {0}".format(utils.lines))
-            #set rootLoopLength handling for non-ints
-            try:
-                loopStatus['rootLoopLength'] = int(splitLine[1])
-            except ValueError:
-                sys.exit("Loop error on line {0}. Loop amount must be integer not '{1}'.".format(utils.lines, splitLine[1]))
-        else:
-        #otherwise add this loop to the loop code
-            loopStatus['loopCode'].append( (lineNumber,line) )
-    #handle loop ends
-    elif splitLine[0] == "endloop":
-        #handle if endloop has no corresponding loop
-        if loopStatus['loopDepth'] == 0:
-            sys.exit("Loop error on line {0}. endloop has no corresponding loop to begin from.".format(utils.lines))
-        #decrease loop depth
-        loopStatus['loopDepth'] -= 1
-        #parse the loopCode if this is the end of the rootLoop
-        if loopStatus['loopDepth'] == 0:
-            preParse(loopStatus['loopCode'],loopStatus['rootLoopLength'])
-            #clear the loop variables
-            loopStatus['loopCode'] = []
-        else:
-        #otherwise add it to the loop code
-            loopStatus['loopCode'].append( (lineNumber,line) )
+    if len(lineInfo['splitLine']) < 1 or lineInfo['line'] == "\n":
+        return lineInfo   
+    
+    #handle loops and other preEval stuff
+    firstWord = lineInfo['splitLine'][0]
+    if firstWord in preEval.keywords:
+        lineInfo = preEval.keywords[firstWord](lineInfo)
+    
+    #handle regular code
     else:
+    
         #if we are in a loop, add this line to the loop code
-        if loopStatus['loopDepth'] != 0:
-            loopStatus['loopCode'].append( (lineNumber,line) )
+        if lineInfo['loopDepth'] != 0:
+            lineInfo['loopCode'].append( (lineInfo['lineNumber'],lineInfo['line']) )
+        
+        #otherwise go ahead and evaluate it
         else:
-        #otherwise go ahead and parse it
-            parse(line)
+            eval_(lineInfo['splitLine'])
+            
     #return loop status info
-    return loopStatus               
+    return lineInfo               
 
-def parse(line):
-    line = line.split()
-    if line[0] in utils.keywords:
-        utils.keywords[line[0]](line)
+#evaluates a line of code 
+# (eval_ differs from parse in that parse handles loops and comments and then pases the lines to eval_ )
+def eval_(splitLine):
+    if splitLine[0] in utils.keywords:
+        utils.keywords[splitLine[0]](splitLine)
     else:
-        sys.exit("Incorrect key word '{0}' on line {1}".format(line[0], utils.lines))
+        sys.exit("Incorrect key word '{0}' on line {1}".format(splitLine[0], utils.lines))
 
