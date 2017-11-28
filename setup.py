@@ -12,7 +12,7 @@ setup(name='HTTPLang',
           'console_scripts': ['httplang=httplang:console_main'],
       },
       url='https://github.com/Max00355/HTTPLang',
-      description='A scripting langauge to do HTTP routines.',
+      description='A scripting language to do HTTP routines.',
       classifiers=[
           'Operating System :: POSIX',
           'Programming Language :: Python',
