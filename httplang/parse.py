@@ -1,66 +1,80 @@
-import utils
+import tokenize
 import sys
-import preEval
 
-#handles lines of code in a list
-def listParse(code,loops = 1):
-    #fufill loops
-    for i in range(loops):
-        #set loop status variable
-        #NOTE: PROBABLY SHOULD CHANGE TO NAMEDTUPLE
-        lineInfo = {'loopDepth':0,
-                  'rootLoopLength':0,
-                  'loopCode':[],
-                  'line':"",
-                  'lineNumber':0,
-                  'splitLine' : []}
-        #iterate through lines in the code
-        for lineNumber, line in code:
-            #update the lineInfo variable
-            lineInfo['line'] = line
-            lineInfo['lineNumber'] = lineNumber
-            #set the global lines variables (add one because line count starts at one)
-            utils.lines = lineNumber
-            #hand off line to parse
-            lineInfo = parse(lineInfo)
+global line
+line = 0
 
-#parses single line of code
-def parse(lineInfo):
-    
-    #remove comments
-    lineInfo['line'] = preEval.removeComments(lineInfo['line'])
-    
-    #split line
-    lineInfo['splitLine'] = lineInfo['line'].split()
-    
-    #ignore empty/blank lines
-    if len(lineInfo['splitLine']) < 1 or lineInfo['line'] == "\n":
-        return lineInfo   
-    
-    #handle loops and other preEval stuff
-    firstWord = lineInfo['splitLine'][0]
-    if firstWord in preEval.keywords:
-        lineInfo = preEval.keywords[firstWord](lineInfo)
-    
-    #handle regular code
-    else:
-    
-        #if we are in a loop, add this line to the loop code
-        if lineInfo['loopDepth'] != 0:
-            lineInfo['loopCode'].append( (lineInfo['lineNumber'],lineInfo['line']) )
+class AST: 
+    def __init__(self, left, right, tt, lexeme, l):
+        self.left = left
+        self.right = right
+        self.token_type = tt
+        self.lexeme = lexeme
+        self.line = l
         
-        #otherwise go ahead and evaluate it
+def Program(tokens):
+    global line
+    for token in tokens:
+        tt = token['tokenType']
+        if tt == "DO":
+            line += 1
+            yield do(tokens) 
+        elif tt == "SET":
+            line += 1
+            yield set_(tokens)
+        elif tt == "SHOW":
+            line += 1
+            yield show(tokens)
+        elif tt == "LABEL":
+            line += 1
+            yield label(tokens)
+        elif tt == "GOTO":
+            line += 1
+            yield goto(tokens)
+        elif tt == "CONDITION":
+            line += 1
+            yield condition(tokens)
         else:
-            eval_(lineInfo['splitLine'])
-            
-    #return loop status info
-    return lineInfo               
+            sys.exit("Parse Error: Don't know what to do with {} line {}".format(token, line))
+def condition(tokens):
+    condition_expr = expr(tokens)
+    goto_part = goto(tokens)
 
-#evaluates a line of code 
-# (eval_ differs from parse in that parse handles loops and comments and then pases the lines to eval_ )
-def eval_(splitLine):
-    if splitLine[0] in utils.keywords:
-        utils.keywords[splitLine[0]](splitLine)
-    else:
-        sys.exit("Incorrect key word '{0}' on line {1}".format(splitLine[0], utils.lines))
+def do(tokens):
+    pass
+
+def set_(tokens):
+    pass
+
+def expr(tokens):
+    pass
+
+def show(tokens):
+    variable_name = global_var(tokens)
+    return AST(variable_name, None, "SHOW", None, line)
+
+def label(tokens):
+    label_name = string(tokens)
+    return AST(label_name, None, "LABEL", None, line)
+
+def goto(tokens):
+    pass
+
+def string(tokens):
+    string_val = tokens.next()
+    if string_val['tokenType'] != "STRING":
+        sys.exit("Parse Error: {} is not a STRING line {}".format(string_val['lexeme'], line))
+    return AST(None, None, string_val['tokenType'], string_val['lexeme'], line)
+
+def integer(tokens):
+    pass
+
+def global_var(tokens):
+    variable_val = tokens.next()
+    if variable_val['tokenType'] == "GLOBAL_VAR":
+        sys.exit("Parse Error: {} is not a GLOBAL_VAR line {}".format(variable_val['lexeme'], line))
+    return AST(None, None, variable_val['tokenType'], variable_val['lexeme'], line)
+
+if __name__ == "__main__":
+    print list(Program(tokenize.getTokens(open("test.httpl"))))
 

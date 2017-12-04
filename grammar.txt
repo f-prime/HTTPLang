@@ -1,0 +1,12 @@
+<set> := <global_var> <string> 
+<do> := <method> <string>
+<method> := GET | POST | PUT | DELETE | PATCH
+<global_var> := URL | TMPCOOKIE | COOKIE | HTML | POSTDATA | USERAGENT | STATUS | VALUE | LINKS
+<show> := <global_var>
+<condition> := <expr> <goto>
+<expr> := (<global_var> | <string> | <int>) <operator> (<global_var> | <string> | <int> ) 
+<label> := <string>
+<goto> := <int> | <label>
+<operator> := "==" | "!=" | ">=" | "<="
+<string> := "\"(.*)?\""
+<int> := "[0-9]+"
