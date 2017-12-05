@@ -5,12 +5,12 @@ tokens = {
         "^do$":"DO",
         "^set$":"SET",
         "^GET$|^POST$|^PUT$|^DELETE$|^PATCH$":"METHOD",
-        "^URL$|^TMPCOOKIE$|^COOKIE$|^HTML$|^POSTDATA$|^USERAGENT$|^STATUS$|^LINK$|^VALUE$":"GLOBAL",
+        "^URL$|^SETCOOKIE$|^COOKIE$|^RESPONSE$|^POSTDATA$|^USERAGENT$|^STATUS$|^LINKS$":"GLOBAL",
         "^show$":"SHOW",
         "^if$":"CONDITION",
         "^label$":"LABEL",
         "^goto$":"GOTO",
-        "==|!=|>=|<=":"OPERATOR",
+        ">|<|==|!=|>=|<=":"OPERATOR",
         "\"(.*?)\"":"STRING",
         "[0-9]+":"INTEGER"
 }
@@ -37,4 +37,4 @@ def getTokens(stream):
             token += char
 
 if __name__ == "__main__":
-    print list(getTokens(open("test.httpl")))
+    print(list(getTokens(open("test.httpl"))))
