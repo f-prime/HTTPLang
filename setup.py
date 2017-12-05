@@ -2,9 +2,7 @@ from setuptools import setup
 import sys
 
 setup(name='HTTPLang',
-      version='1.0.0',
-      install_requires=[
-                r for r in open('requirements.txt', 'r').read().split('\n') if r],
+      version='2.0.0',
       author='Frankie Primerano',
       author_email='max00355@gmail.com',
       packages=['httplang'],

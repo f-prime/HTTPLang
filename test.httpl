@@ -1,0 +1,6 @@
+label "start"
+set URL "http://google.com"
+do GET "/"
+show "LOL"
+show STATUS
+if STATUS == 200 goto "start"

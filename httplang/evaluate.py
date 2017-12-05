@@ -61,11 +61,19 @@ def goto(line):
     global_data.line_on = global_data.labels[line.left.lexeme]
 
 def condition(line):
-   condition = line.left.lexeme
-   larg = line.left.left.lexeme
-   rarg = line.left.right.lexeme
-   if operators[condition](larg, rarg):
-       goto(line.right)
+    condition = line.left.lexeme
+    larg = line.left.left
+    rarg = line.left.right
+    if larg.token_type == "GLOBAL":
+        larg = global_data.GLOBALS[larg.lexeme]
+    else:
+        larg = larg.lexeme
+    if rarg.token_type == "GLOBAL":
+        rarg = global_data.GLOBALS[rarg.lexeme]
+    else:
+        rarg = rarg.lexeme
+    if operators[condition](str(larg), str(rarg)): # THis is a temp fix, when integers are more important this can't be used.
+        goto(line.right)
 
 if __name__ == "__main__":
     f = "test.httpl"
